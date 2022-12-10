@@ -17,15 +17,25 @@ public class CaloriesCounter{
                         elfSum += number;
                 }
             }
-            else{
+            else
+            {
                 elvesCalories.Add(elfSum);
-                elfSum = 0;
-                        
+                elfSum = 0;                       
             }
         }
     }
 
     public int FindMax(){
         return elvesCalories.Max();
+    }
+    public int SumTopThreeMax(){
+        // quick and dirty
+
+        int top1 = elvesCalories.Max();
+        elvesCalories.Remove(top1);
+        int top2 = elvesCalories.Max();
+        elvesCalories.Remove(top2);
+        int top3 = elvesCalories.Max();
+        return top1 + top2 + top3;
     }
 }

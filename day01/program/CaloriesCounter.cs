@@ -7,9 +7,6 @@ public class CaloriesCounter{
        
         string[] lines = System.IO.File.ReadAllLines(path);
 
-        // Display the file contents by using a foreach loop.
-        System.Console.WriteLine("Contents of WriteLines2.txt = ");
-
         int elfSum =0;
         foreach (string line in lines)
         {

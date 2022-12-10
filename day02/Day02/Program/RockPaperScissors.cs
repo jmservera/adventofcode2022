@@ -48,6 +48,8 @@
     {
         var score = 0;
 
+        int counter = 0;
+
         foreach (var turn in play)
         {
             char choose;
@@ -61,7 +63,7 @@
                     // you choose Scissors for losing
                     choose = 'C';
                 }
-                if (turn[0] == 'B') // paper
+                else if (turn[0] == 'B') // paper
                 {
                     // you choose Rock for losing
                     choose = 'A';
@@ -81,7 +83,7 @@
                 choose = turn[0];
 
             }
-            else
+            else if (turn[2]=='Z')
             {
                 // you win
                 score += 6;
@@ -91,7 +93,7 @@
                     // you choose Paper for winning
                     choose = 'B';
                 }
-                if (turn[0] == 'B') // paper
+                else if(turn[0] == 'B') // paper
                 {
                     // you choose Scissors for winning
                     choose = 'C';
@@ -102,9 +104,17 @@
                     choose = 'A';
                 }
             }
+            else
+            {
+                Console.WriteLine("wtf");
+                choose = ' ';
+            }
 
             score += scores[choose];
+            counter++;
         }
+
+        Console.WriteLine($"{counter}");
 
         return score; 
     

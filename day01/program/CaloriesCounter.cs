@@ -21,7 +21,12 @@ public class CaloriesCounter{
             {
                 elvesCalories.Add(elfSum);
                 elfSum = 0;                       
-            }
+            }               
+        }
+
+        if(elfSum> 0)
+        {
+            elvesCalories.Add(elfSum);
         }
     }
 

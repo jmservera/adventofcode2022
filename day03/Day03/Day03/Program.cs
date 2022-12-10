@@ -1,0 +1,6 @@
+﻿// See https://aka.ms/new-console-template for more information
+using Day03;
+
+Console.WriteLine($"The result for Juanma is {new Rucksack("./data/juanma.txt").GetSumPriorities()}");
+Console.WriteLine($"The result for Isa is {new Rucksack("./data/isa.txt").GetSumPriorities()}");
+Console.Read();

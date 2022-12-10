@@ -1,3 +1,4 @@
+
 public class CaloriesCounter{
     private string[] lines;
     private List<int> elvesCalories = new List<int>();
@@ -33,14 +34,13 @@ public class CaloriesCounter{
     public int FindMax(){
         return elvesCalories.Max();
     }
+    
     public int SumTopThreeMax(){
-        // quick and dirty
 
-        int top1 = elvesCalories.Max();
-        elvesCalories.Remove(top1);
-        int top2 = elvesCalories.Max();
-        elvesCalories.Remove(top2);
-        int top3 = elvesCalories.Max();
-        return top1 + top2 + top3;
+        elvesCalories.Sort();
+        elvesCalories.Reverse();
+
+        // sum top 3
+        return elvesCalories.Take(3).Sum();
     }
 }

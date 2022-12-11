@@ -9,7 +9,13 @@ namespace day04
 {
     public class RangeCheck
     {
-        public RangeCheck( string path) { }
+
+        string[] ranges;
+
+        public RangeCheck( string path) 
+        {
+            ranges = System.IO.File.ReadAllLines(path);
+        }
 
         public int CountFullyContainedRanges()
         { 

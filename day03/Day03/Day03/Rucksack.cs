@@ -31,6 +31,22 @@ namespace Day03
             return sumPriorities;
         }
 
+        public int GetSumGroupPriorities()
+        {
+            int sumPriorities = 0;
+            for (int i = 0; i< data.Length; i+=3)
+            {
+                var group = FindRepeatedItem(data[i], data[i + 1], data[i + 2]);
+                if (group != '\0')
+                    sumPriorities += GetPriority(group);
+                else
+                    Console.WriteLine($"La secuencia {data[i]},{data[i + 1]}, {data[i + 2]} no contiene elementos repetidos");
+
+            }
+            return sumPriorities;
+
+        }
+
         public static int GetPriority(char item)
         {
             if (item >= 'a' && item <= 'z')
@@ -55,6 +71,12 @@ namespace Day03
         {
             var common = compartment1.Intersect(compartment2);
            
+            return common.FirstOrDefault();
+        }
+
+        public static char FindRepeatedItem(string rucksack1, string rucksack2, string rucksack3)
+        {
+            var common = rucksack1.Intersect(rucksack2).Intersect(rucksack3);
             return common.FirstOrDefault();
         }
     }

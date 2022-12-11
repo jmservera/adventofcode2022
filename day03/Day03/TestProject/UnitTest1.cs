@@ -44,8 +44,25 @@ namespace Day03.Test
         [InlineData('Z', 52)]
         public void GetPriorityTest(char caracter, int expectedValue)
         {   
-            Assert.Equal(expectedValue, Rucksack.GetPriority(caracter));
-        
+            Assert.Equal(expectedValue, Rucksack.GetPriority(caracter));        
         }
+
+        [Theory]
+        [InlineData("vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg", 'r')]
+        [InlineData("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw", 'Z')]
+        public void TestGetRepetedItemInRucksacks(string rucksack1, string rucksack2, string rucksack3, char expectedResult)
+        {
+            Assert.Equal(expectedResult, Rucksack.FindRepeatedItem(rucksack1, rucksack2, rucksack3));
+        }
+
+        [Fact]
+        public void SumPrioritiesGroupTest()
+        {
+            var r = new Rucksack("./data/test.txt").GetSumGroupPriorities();
+            Assert.Equal(70, r);
+        }
+
+
+        
     }
 }

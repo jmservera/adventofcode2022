@@ -41,6 +41,11 @@ namespace day04
             return false;
         }
 
+
+        public static bool OverlapRange(int a1, int b1, int a2, int b2)
+        {
+            return false;
+        }
         public static (int, int, int, int) ParseRange(string line)
         {
             return (1, 1, 1, 1);

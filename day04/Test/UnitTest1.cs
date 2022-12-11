@@ -14,7 +14,7 @@ namespace day04.Test
         [InlineData(2, 6, 2, 8, true)]
         [InlineData(3, 8, 2, 8, true)]
         [InlineData(3, 8, 2, 18, true)]
-        public void Test1(int a1, int b1, int a2, int b2, bool expectedResult)
+        public void TestFullyContained(int a1, int b1, int a2, int b2, bool expectedResult)
         {
             Assert.Equal(expectedResult, RangeCheck.ContainRange(a1, b1, a2, b2));
         }
@@ -30,8 +30,27 @@ namespace day04.Test
         public void TestFileTest () 
         {
             var r = new RangeCheck("./data/test.txt").CountFullyContainedRanges();
-            Assert.Equal(2, r);            
-
+            Assert.Equal(2, r);    
         }
+
+        [Theory]
+        [InlineData(5, 7, 7, 9, true)]
+        [InlineData(2, 3, 4, 5, false)]
+        [InlineData(2, 8, 3, 5, true)]
+        [InlineData(6, 6, 4, 6, true)]
+        [InlineData(2, 6, 4, 8, true)]
+        [InlineData(2, 6, 2, 8, true)]
+        [InlineData(3, 8, 2, 8, true)]
+        [InlineData(3, 8, 2, 18, true)]
+        [InlineData(3, 8, 10, 18, false)]
+        [InlineData(10, 18, 3, 4, false)]
+
+        public void TestPartiallyContained(int a1, int b1, int a2, int b2, bool expectedResult)
+        {
+            Assert.Equal(expectedResult, RangeCheck.OverlapRange(a1, b1, a2, b2));
+        }
+
+
+
     }
 }

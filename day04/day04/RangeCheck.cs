@@ -56,6 +56,14 @@ namespace day04
 
         public static bool OverlapRange(int a1, int b1, int a2, int b2)
         {
+            if (a1 >= a2 && a1 <= b2)
+            {
+                return true;
+            }
+            if (a2 >= a1 && a2 <= b1)
+            {
+                return true;
+            }
             return false;
         }
         public static (int, int, int, int) ParseRange(string line)

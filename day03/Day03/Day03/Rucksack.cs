@@ -21,7 +21,11 @@ namespace Day03
             int sumPriorities = 0;
             foreach (var line in data)
             {
-                sumPriorities += GetPriority(FindRepeatedItem(line));
+                var item = FindRepeatedItem(line);
+                if (item != '\0')
+                    sumPriorities += GetPriority(item);
+                else
+                    Console.WriteLine($"La secuencia {line} no contiene elementos repetidos");
             }
 
             return sumPriorities;
@@ -42,14 +46,15 @@ namespace Day03
                 throw new ArgumentException();
             }
 
-            return FindRepeatedItem(allTheRucksack.Substring(0, allTheRucksack.Length / 2),
-                            allTheRucksack.Substring((allTheRucksack.Length / 2) + 1));            
+            return FindRepeatedItem(allTheRucksack.Substring(0, (allTheRucksack.Length / 2)),
+                            allTheRucksack.Substring((allTheRucksack.Length / 2)));            
 
         }
 
         public static char FindRepeatedItem(string compartment1, string compartment2)
         {
             var common = compartment1.Intersect(compartment2);
+           
             return common.FirstOrDefault();
         }
     }

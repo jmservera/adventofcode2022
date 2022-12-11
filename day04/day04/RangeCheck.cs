@@ -18,9 +18,17 @@ namespace day04
         }
 
         public int CountFullyContainedRanges()
-        { 
-        
-           return 0; 
+        {
+            var count = 0;
+            foreach (var range in ranges)
+            {
+                var (a1, b1, a2, b2) = ParseRange(range);
+                if (ContainRange(a1, b1, a2, b2))
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         //two ranges are a1-b1, a2-b2

@@ -18,9 +18,17 @@ namespace day04
         }
 
         public int CountFullyContainedRanges()
-        { 
-        
-           return 0; 
+        {
+            var count = 0;
+            foreach (var range in ranges)
+            {
+                var (a1, b1, a2, b2) = ParseRange(range);
+                if (ContainRange(a1, b1, a2, b2))
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         //two ranges are a1-b1, a2-b2
@@ -48,7 +56,12 @@ namespace day04
         }
         public static (int, int, int, int) ParseRange(string line)
         {
-            return (1, 1, 1, 1);
+            var query = from s in line.Split(',')
+                        let range = s.Split('-')
+                        from r in range
+                        select int.Parse(r);
+            var l = query.ToList();
+            return (l[0], l[1], l[2], l[3]);
         }
 
 

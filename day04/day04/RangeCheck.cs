@@ -12,9 +12,19 @@ namespace day04
         //two ranges are a1-b1, a2-b2
         public static bool ContainRange(int a1, int b1, int a2, int b2)
         {
+            if(a1>=a2)
+            {
+                if (b1 <= b2)
+                    return true;
+            }
 
-            return true;
+            if (a2 >= a1)
+            {
+                if (b2 <= b1)
+                    return true;
+            }
 
+            return false;
         }
 
 

@@ -11,7 +11,9 @@ namespace day04.Test
         [InlineData(2, 8, 3, 7, true)]
         [InlineData(6, 6, 4, 6, true)]
         [InlineData(2, 6, 4, 8, false)]
-
+        [InlineData(2, 6, 2, 8, true)]
+        [InlineData(3, 8, 2, 8, true)]
+        [InlineData(3, 8, 2, 18, true)]
         public void Test1(int a1, int b1, int a2, int b2, bool expectedResult)
         {
             Assert.Equal(expectedResult, RangeCheck.ContainRange(a1, b1, a2, b2));

@@ -30,7 +30,12 @@ namespace day04
 
         public static (int, int, int, int) ParseRange(string line)
         {
-            return (1, 1, 1, 1);
+            var query = from s in line.Split(',')
+                        let range = s.Split('-')
+                        from r in range
+                        select int.Parse(r);
+            var l = query.ToList();
+            return (l[0], l[1], l[2], l[3]);
         }
 
 

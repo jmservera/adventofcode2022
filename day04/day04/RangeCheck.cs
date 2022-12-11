@@ -10,6 +10,19 @@ namespace day04
     public class RangeCheck
     {
 
+        string[] ranges;
+
+        public RangeCheck( string path) 
+        {
+            ranges = System.IO.File.ReadAllLines(path);
+        }
+
+        public int CountFullyContainedRanges()
+        { 
+        
+           return 0; 
+        }
+
         //two ranges are a1-b1, a2-b2
         public static bool ContainRange(int a1, int b1, int a2, int b2)
         {

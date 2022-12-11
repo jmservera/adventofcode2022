@@ -26,6 +26,12 @@ namespace day04.Test
             Assert.Equal((a1, b1, a2, b2), RangeCheck.ParseRange(line));
         }
 
+        [Fact]
+        public void TestFileTest () 
+        {
+            var r = new RangeCheck("./data/test.txt").CountFullyContainedRanges();
+            Assert.Equal(2, r);            
 
+        }
     }
 }

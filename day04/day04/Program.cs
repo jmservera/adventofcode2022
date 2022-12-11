@@ -7,6 +7,9 @@ foreach(var file in inputFiles)
 {
     var r = new RangeCheck(file).CountFullyContainedRanges();
     Console.WriteLine($"{file} has {r} fully contained ranges");
+
+    var r = new RangeCheck(file).over();
+    Console.WriteLine($"{file} has {r} fully contained ranges");
 }
 
 Console.ReadLine();

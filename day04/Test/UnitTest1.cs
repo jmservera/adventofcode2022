@@ -36,7 +36,7 @@ namespace day04.Test
         [Fact]
         public void TestOverlapRangesTest()
         {
-            var r = new RangeCheck("./data/test.txt").CountFullyContainedRanges();
+            var r = new RangeCheck("./data/test.txt").CountOverlappedRanges();
             Assert.Equal(4, r);
         }
 

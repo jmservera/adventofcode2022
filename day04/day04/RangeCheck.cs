@@ -30,6 +30,10 @@ namespace day04
             }
             return count;
         }
+        public int CountOverlappedRanges()
+        {
+            return 0;
+        }
 
         //two ranges are a1-b1, a2-b2
         public static bool ContainRange(int a1, int b1, int a2, int b2)

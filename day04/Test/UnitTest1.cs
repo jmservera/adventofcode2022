@@ -27,10 +27,17 @@ namespace day04.Test
         }
 
         [Fact]
-        public void TestFileTest () 
+        public void TestFullyContainedTest () 
         {
             var r = new RangeCheck("./data/test.txt").CountFullyContainedRanges();
             Assert.Equal(2, r);    
+        }
+
+        [Fact]
+        public void TestOverlapRangesTest()
+        {
+            var r = new RangeCheck("./data/test.txt").CountFullyContainedRanges();
+            Assert.Equal(4, r);
         }
 
         [Theory]

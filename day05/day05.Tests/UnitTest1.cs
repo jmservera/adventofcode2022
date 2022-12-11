@@ -25,6 +25,7 @@ namespace day05.Tests
             Assert.Equal((1, 1, 2), moves[3]);
         }
 
+        [Fact]
         public void TestMove()
         {
             var cs = new CraneStacks(path);

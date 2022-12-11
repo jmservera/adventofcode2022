@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,11 @@ namespace day04
             }
 
             return false;
+        }
+
+        public static (int, int, int, int) ParseRange(string line)
+        {
+            return (1, 1, 1, 1);
         }
 
 

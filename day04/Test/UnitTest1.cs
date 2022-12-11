@@ -19,6 +19,13 @@ namespace day04.Test
             Assert.Equal(expectedResult, RangeCheck.ContainRange(a1, b1, a2, b2));
         }
 
+        [Theory]
+        [InlineData("2-4, 6-8", 2, 4, 6, 8)]
+        public void TestParseRanges(string line, int a1, int b1, int a2, int b2)
+        {
+            Assert.Equal((a1, b1, a2, b2), RangeCheck.ParseRange(line));
+        }
+
 
     }
 }

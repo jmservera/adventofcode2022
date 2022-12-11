@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace day04.data
+namespace day04
 {
     public class RangeCheck
     {

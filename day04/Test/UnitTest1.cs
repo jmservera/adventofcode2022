@@ -1,6 +1,6 @@
-using day04.data;
+using day04;
 
-namespace Test
+namespace day04.Test
 {
     public class UnitTest1
     {

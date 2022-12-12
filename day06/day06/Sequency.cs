@@ -19,6 +19,12 @@ namespace day06
         {
             return FindMarker(signal);
         }
+
+        public int FindMarkerInSignal14()
+        {
+            return FindMarker14(signal);
+        }
+        
         public static int FindMarker(string signal)
         {
             for (int i = 0; i < signal.Length-4; i++) 

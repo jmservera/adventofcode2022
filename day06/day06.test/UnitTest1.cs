@@ -24,6 +24,18 @@ namespace day06.test
             Assert.Equal(result, Sequency.FindMarker(sequency));
         }
 
+        [Theory]
+        [InlineData("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19)]
+        [InlineData("bvwbjplbgvbhsrlpgdmjqwftvncz", 23)]
+        [InlineData("nppdvjthqldpwncqszvftbrmjlhg", 23)]
+        [InlineData("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29)]
+        [InlineData("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26)]
+
+        public void findMarker14Test(string sequency, int result)
+        {
+            Assert.Equal(result, Sequency.FindMarker14(sequency));
+        }
+
 
     }
 }

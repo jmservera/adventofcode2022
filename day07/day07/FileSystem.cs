@@ -10,5 +10,9 @@ namespace day07
     {
         public FileSystem(string file) { }
 
+        public int FolderSize(string folder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

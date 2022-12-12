@@ -30,6 +30,17 @@ namespace day06
             return -1;
         }
 
+        public static int FindMarker14(string signal)
+        {
+            for (int i = 0; i < signal.Length - 14; i++)
+            {
+                if (checkIfDifferents(signal.Substring(i, 14)))
+                    return i + 14;
+            }
+
+            return -1;
+        }
+
         public int GetSignalLenght()
         { 
             return signal.Length;

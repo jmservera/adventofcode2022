@@ -21,8 +21,7 @@ namespace day06.test
 
         public void findMarkerTest(string sequency, int result)
         {
-
-            Assert.Equal(result, Sequency.findMarker(sequency));
+            Assert.Equal(result, Sequency.FindMarker(sequency));
         }
 
 

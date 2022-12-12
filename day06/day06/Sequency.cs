@@ -26,6 +26,11 @@ namespace day06
             return 4;
         }
 
+        public int GetSignalLenght()
+        { 
+            return signal.Length;
+        }
+
         public static bool checkIfDifferents(string sequency)
         {
             for(int i = 0; i< sequency.Length; i++)

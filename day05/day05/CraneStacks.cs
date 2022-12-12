@@ -70,12 +70,11 @@ namespace day05
                 {
                     lineIsAStack = false;
                 }
-            }
-            // I have all the stacks in "stack"
+            }            
 
+            // I have all the stacks in "stack"
             // How many stacks do I have?
             string lastLine = stackFile.Pop();
-
             int numStacks = GetNumStacks(lastLine);
 
             for (int i = 0; i < numStacks; i++)
@@ -97,17 +96,28 @@ namespace day05
                 }
             }
 
-
-
-
             return stacks;
         }
 
         public static List<(int, int, int)> ParseMoves(string path)
         {
             var file = System.IO.File.ReadAllLines(path);
+            int counter = 0;
+            while (lineIsPartOfStack(file[counter]))
+            {
+                counter++;
+            }
 
-            return null;
+            List<(int, int, int)> moveList = new List<(int, int, int)>();
+
+            for (int i = ++counter; i < file.Length; i++)
+            {
+                var line = file[i].Split(' ');
+                //move 1 from 7 to 4
+                moveList.Add(new (int.Parse(line[1]), int.Parse(line[3]), int.Parse(line[5])));
+            }
+
+            return moveList;
         }
 
         private static int GetNumStacks(string lastLine)

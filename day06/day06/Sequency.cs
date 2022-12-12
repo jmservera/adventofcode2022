@@ -12,23 +12,22 @@ namespace day06
 
         public Sequency(string path) 
         {
-            signal = System.IO.File.ReadAllLines(path).ToString();
-
+            signal = System.IO.File.ReadAllText(path);
         }
+        
         public int FindMarkerInSignal()
         {
             return FindMarker(signal);
         }
         public static int FindMarker(string signal)
         {
-            int pointer = 0;
-            for (int i = 0; i < signal.Length; i++) 
-            { 
-                
+            for (int i = 0; i < signal.Length-4; i++) 
+            {
+                if (checkIfDifferents(signal.Substring(i, 4)))
+                    return i+4;
             }
 
-            // TODO: juanma
-            return 4;
+            return -1;
         }
 
         public int GetSignalLenght()

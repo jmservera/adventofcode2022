@@ -41,6 +41,28 @@ namespace day05.Tests
         }
 
         [Fact]
+        public void TestAllMoves()
+        {
+            var cs = new CraneStacks(path);
+            var actualResult = cs.RunAllMoves();
+            
+            Assert.Equal("CMZ", actualResult);
+
+        }
+
+        [Fact]
+        public void TestAllMoves9001()
+        {
+            var cs = new CraneStacks(path);
+            var actualResult = cs.RunAllMoves9001();
+
+            Assert.Equal("MCD", actualResult);
+
+        }
+
+
+
+        [Fact]
         public void TestCopyStack()
         {
             var s = new Stack<char>();

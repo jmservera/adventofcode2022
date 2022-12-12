@@ -11,5 +11,9 @@ foreach (var file in files)
 {
     var cs = new CraneStacks(file);
     var result = cs.RunAllMoves();
-    Console.WriteLine($"The moves for ${file} are ${result}.");
+    Console.WriteLine($"The moves CrateMover 9000 for ${file} are ${result}.");
+    cs = new CraneStacks(file);
+    var result2 = cs.RunAllMoves9001();
+    Console.WriteLine($"The moves CrateMover 9001 for ${file} are ${result2}.");
 }
+Console.Read();

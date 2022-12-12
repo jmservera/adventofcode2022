@@ -25,7 +25,11 @@ namespace day05
 
         public void Move(int nrOfBlocks, int from, int to)
         {
-            
+            for(int i = 0; i< nrOfBlocks; i++)
+            {
+                var block = stacks[from-1].Pop();
+                stacks[to-1].Push(block);
+            }
         }
 
         public string GetHead()
@@ -47,6 +51,10 @@ namespace day05
 
         public string RunAllMoves()
         {
+            foreach(var move in moves) 
+            {
+                Move(move.Item1, move.Item2, move.Item3);
+            }
             return GetHead();
         }
 
@@ -138,6 +146,29 @@ namespace day05
             }
         }
 
+        public object RunAllMoves9001()
+        {
+            foreach (var move in moves)
+            {
+                Move9001(move.Item1, move.Item2, move.Item3);
+            }
+            return GetHead();
+        }
 
+
+        public void Move9001(int nrOfBlocks, int from, int to)
+        {
+            List<char> temp = new List<char>();
+
+            for (int i = 0; i < nrOfBlocks; i++)
+            {
+                temp.Add(stacks[from - 1].Pop());                
+            }
+            temp.Reverse();
+            for (int i = 0; i < temp.Count; i++)
+            {
+                stacks[to - 1].Push(temp[i]);
+            }
+        }
     }
 }

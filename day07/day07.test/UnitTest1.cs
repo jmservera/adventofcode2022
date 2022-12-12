@@ -12,4 +12,6 @@ public class UnitTest1
         var f = new FileSystem("./data/test.txt");
         Assert.Equal(expected, f.FolderSize(folder));
     }
+
+    
 }

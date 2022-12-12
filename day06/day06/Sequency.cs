@@ -21,6 +21,11 @@ namespace day06
         }
         public static int FindMarker(string signal)
         {
+            int pointer = 0;
+            for (int i = 0; i < signal.Length; i++) 
+            { 
+                
+            }
 
             // TODO: juanma
             return 4;
@@ -35,7 +40,7 @@ namespace day06
         {
             for(int i = 0; i< sequency.Length; i++)
             {
-                for(int j=i; j < sequency.Length; j++)
+                for(int j=i+1; j < sequency.Length; j++)
                 {
                     if (sequency[i] == sequency[j])
                     {

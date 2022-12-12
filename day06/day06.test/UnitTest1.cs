@@ -3,8 +3,8 @@ namespace day06.test
     public class UnitTest1
     {
         [Theory]
-        [InlineData("1234", false)]
-        [InlineData("aqwer", false)]
+        [InlineData("1234", true)]
+        [InlineData("aqwer", true)]
         [InlineData("aqaer", false)]
         [InlineData("aqwuyq", false)]
         public void allDifferentTest(string sequency, bool result)

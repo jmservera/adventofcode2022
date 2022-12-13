@@ -9,8 +9,9 @@ public class UnitTest1
     [InlineData(48381165, "/")]
     public void TestFolderSize(int expected, string folder)
     {
-        var f = new FileSystem("./data/test.txt");
-        Assert.Equal(expected, f.FolderSize(folder));
+        var f = new System("./data/test.txt");
+        var size = f.RunCommands();
+        Assert.Equal(expected, size);
     }
 
     

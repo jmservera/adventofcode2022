@@ -11,9 +11,14 @@ public class UnitTest1
     {
         var f = new FileSystem("./data/test.txt");
         f.RunCommands();
-
-        Assert.NotNull(expected);
+        Assert.Equal(expected, f.FolderSize(folder));
     }
 
-    
+    [Fact]
+    public void TestSumAtMost100000()
+    {
+        var f = new FileSystem("./data/test.txt");
+        f.RunCommands();
+        Assert.Equal(95437, f.SumAtMost100000());
+    }
 }

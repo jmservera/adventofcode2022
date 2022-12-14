@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,13 @@ namespace day07
     {
         public string[] commands;
         public Stack<string> currentDirectory;
+        Dictionary<string, long> directorySizes;
 
         public FileSystem(string path) 
         {
             commands = System.IO.File.ReadAllLines(path);
             currentDirectory = new Stack<string>();
-
+            directorySizes = new Dictionary<string, long>();
         }
 
 
@@ -24,8 +26,6 @@ namespace day07
         public void RunCommands()
         {
             long size = 0;
-            string path = string.Empty;
-
             for (int i = 0; i < commands.Count(); i++)
             {
                 var command = commands[i];
@@ -44,17 +44,16 @@ namespace day07
                         }
                         else
                         {
-                            path += directoryNav;
-                            currentDirectory.Push(path);
+                            currentDirectory.Push(directoryNav);
                         }
-
                     }
                     else if (parts.Count() == 2)
                     {
                         // it's an ls
-
                         //next thing is an output
-                        size += GetSizeOutput(ref i);
+                        size += GetSizeOutput( i);
+                        AddSizeToTheDirectoriesInTheStack(size);
+                        size = 0;
                     }
                     else
                     {
@@ -70,48 +69,92 @@ namespace day07
                 else
                 {
                     // It's a result
+                    //ignore it because we processed it in "GetSizeOutput" method
                 }
             }
         }
 
-        private long GetSizeOutput(ref int i)
+        private void AddSizeToTheDirectoriesInTheStack(long size)
+        {
+            String path = String.Empty;
+
+            foreach (var dir in currentDirectory.Reverse())
+            {
+                if (path.Length > 1)
+                {
+                    path += "/";
+                }
+                path += dir;                            
+
+
+                if (directorySizes.ContainsKey(path))
+                {
+                    //add size
+                    directorySizes[path] += size;
+                }
+                else
+                {
+                    //add item
+                    directorySizes[path] = size;
+                }
+            }
+        }
+
+        private long GetSizeOutput(int i)
         {
             bool isResult = true;
             i++;
             long sizeSum = 0;
             do
             {
-                var result = commands[i];
-
-                if (result[0] != '$')
+                if (i < commands.Count())
                 {
-                    //sigue siendo result
-                    var parts = result.Split(' ');
-                    if (parts[0] == "dir")
-                    { }
+                    var result = commands[i];
+
+                    if (result[0] != '$')
+                    {
+                        //sigue siendo result
+                        var parts = result.Split(' ');
+                        if (parts[0] == "dir")
+                        { }
+                        else
+                        {
+                            var size = long.Parse(parts[0]);
+                            sizeSum += size;
+                        }
+                        i++;
+                    }
                     else
                     {
-                        var size = long.Parse(parts[0]);
-                        sizeSum += size;
+                        isResult = false;
                     }
-                    
-                    i++;
                 }
                 else
-                {
-                    isResult = false;
+                { 
+                    isResult = false; 
                 }
 
-
             } while (isResult);
-
             return sizeSum;
         }
 
 
-        public int FolderSize(string folder)
+        public long FolderSize(string folder)
         {
-            throw new NotImplementedException();
+            return directorySizes[folder];
+        }
+
+        public long SumAtMost100000()
+        {
+            long totalSum = 0;
+            foreach (var dir in directorySizes)
+            {
+                if (dir.Value <= 100000)
+                {
+                    totalSum += dir.Value;
+                }                
+            }
+            return totalSum;
         }
     }
 }

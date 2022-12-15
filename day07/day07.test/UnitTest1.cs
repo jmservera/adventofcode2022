@@ -21,4 +21,13 @@ public class UnitTest1
         f.RunCommands();
         Assert.Equal(95437, f.SumAtMost100000());
     }
+
+    [Fact]
+    public void TestMinSizeMoreThan30000000()
+    {
+        var f = new FileSystem("./data/test.txt");
+        f.RunCommands();
+        Assert.Equal(24933642, f.MinSizeMoreThan30000000());
+
+    }
 }

@@ -12,10 +12,8 @@ foreach (var file in files)
     var fs = new FileSystem(file);
     fs.RunCommands();
     var result = fs.SumAtMost100000();
-
     Console.WriteLine($"The result for {file} are {result}.");
-/*    cs = new CraneStacks(file);
-    var result2 = cs.RunAllMoves9001();
-    Console.WriteLine($"The moves CrateMover 9001 for ${file} are ${result2}.");*/
+    var result2 = fs.MinSizeMoreThan30000000();
+    Console.WriteLine($"The 2nd result for ${file} is ${result2}.");
 }
 Console.Read();

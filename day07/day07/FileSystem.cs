@@ -154,7 +154,20 @@ namespace day07
                     totalSum += dir.Value;
                 }                
             }
+
+            var test = directorySizes.Where(dir => dir.Value <= 100000).Sum(dir => dir.Value);
             return totalSum;
+        }
+
+        public long MinSizeMoreThan30000000()
+        {
+            var spaceAvailable = 70000000 - directorySizes.FirstOrDefault(dir => dir.Key.Equals("/")).Value;
+            var totalSpaceNeeded = 30000000;
+            var spaceNeedToBeFreeUp = totalSpaceNeeded - spaceAvailable;
+
+            var size = directorySizes.Where(dir => dir.Value >= spaceNeedToBeFreeUp);
+            var min = size.Min( dir => dir.Value);
+            return min;
         }
     }
 }

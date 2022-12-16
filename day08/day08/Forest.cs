@@ -96,5 +96,59 @@ namespace day08
             }
         }
 
+        public int GetScenicScore(int x, int y)
+        {
+            int scenicScore = 0;
+
+            int rightScenicScore = countR(x, y);
+            int leftScenicScore = countL(x, y);
+
+            scenicScore = rightScenicScore * leftScenicScore;
+
+            return scenicScore;
+
+        }
+
+        private int countR(int x, int y)
+        {
+            int currentHight = forest[x,y];
+            int scenicScore = 0;
+            bool shorterTree = true;
+            int i = y + 1;
+            do
+            {
+                if (forest[x, i] >= currentHight)
+                {
+                    shorterTree = false;
+                }
+
+                scenicScore++;
+                i++;
+            } while (shorterTree || i < width);
+
+
+            return scenicScore;
+        }
+
+        private int countL(int x, int y)
+        {
+            int currentHight = forest[x, y];
+            int scenicScore = 0;
+            bool shorterTree = true;
+            int i = y -1;
+            do
+            {
+                if (forest[x, i] >= currentHight)
+                {
+                    shorterTree = false;
+                }
+
+                scenicScore++;
+                i--;
+            } while (shorterTree && i >= 0);
+
+
+            return scenicScore;
+        }
     }
 }

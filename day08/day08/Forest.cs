@@ -96,14 +96,35 @@ namespace day08
             }
         }
 
+        public int GetMaxScenicScore()
+        {
+            int max = 0;
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    var scenicScore = GetScenicScore(i, j);
+                    if (scenicScore > max)
+                    {
+                        max = scenicScore;
+                    }
+                }
+            }
+
+            return max;
+        }
+
         public int GetScenicScore(int x, int y)
         {
             int scenicScore = 0;
 
             int rightScenicScore = countR(x, y);
             int leftScenicScore = countL(x, y);
+            int downScenicScore = countD(x, y);
+            int topScenicScore = countT(x, y);
 
-            scenicScore = rightScenicScore * leftScenicScore;
+            scenicScore = rightScenicScore * leftScenicScore * downScenicScore * topScenicScore;
 
             return scenicScore;
 
@@ -124,7 +145,7 @@ namespace day08
 
                 scenicScore++;
                 i++;
-            } while (shorterTree || i < width);
+            } while (shorterTree && i < width);
 
 
             return scenicScore;
@@ -138,17 +159,60 @@ namespace day08
             int i = y -1;
             do
             {
-                if (forest[x, i] >= currentHight)
+                if (forest[x, i] > currentHight)
                 {
                     shorterTree = false;
                 }
 
                 scenicScore++;
                 i--;
-            } while (shorterTree && i >= 0);
+            } while (shorterTree && i > 0);
 
 
             return scenicScore;
         }
+
+        private int countD(int x, int y)
+        {
+            int currentHight = forest[x, y];
+            int scenicScore = 0;
+            bool shorterTree = true;
+            int i = x + 1;
+            do
+            {
+                if (forest[i, y] >= currentHight)
+                {
+                    shorterTree = false;
+                }
+
+                scenicScore++;
+                i++;
+            } while (shorterTree && i < height);
+
+
+            return scenicScore;
+        }
+
+        private int countT(int x, int y)
+        {
+            int currentHight = forest[x, y];
+            int scenicScore = 0;
+            bool shorterTree = true;
+            int i = x - 1;
+            do
+            {
+                if (forest[i, y] >= currentHight)
+                {
+                    shorterTree = false;
+                }
+
+                scenicScore++;
+                i--;
+            } while (shorterTree && i > 0);
+
+
+            return scenicScore;
+        }
+
     }
 }

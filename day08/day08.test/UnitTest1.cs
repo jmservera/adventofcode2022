@@ -20,4 +20,16 @@ public class UnitTest1
         Assert.Equal(expectedResult, actualResult);
 
     }
+
+    [Fact]
+    public void TestMaxScenicScore()
+    {
+
+            int expectedResult = 8;
+            var forest = new Forest("data/test.txt");
+            var actualResult = forest.GetMaxScenicScore();
+            Assert.Equal(expectedResult, actualResult);
+
+       
+    }
 }

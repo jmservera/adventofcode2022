@@ -10,5 +10,7 @@ foreach (var file in files)
 {
     var forest = new Forest(file);
     Console.WriteLine($"The result for {file} is {forest.CountVisibleTrees()}.");
+    Console.WriteLine($"The result for {file} is {forest.GetMaxScenicScore()}.");
+
 }
 Console.Read();

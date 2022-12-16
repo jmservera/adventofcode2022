@@ -118,7 +118,7 @@ namespace day08
         public int GetScenicScore(int x, int y)
         {
             int scenicScore = 0;
-
+            
             int rightScenicScore = countR(x, y);
             int leftScenicScore = countL(x, y);
             int downScenicScore = countD(x, y);
@@ -132,6 +132,7 @@ namespace day08
 
         private int countR(int x, int y)
         {
+            if (y == this.width-1) return 0;
             int currentHight = forest[x,y];
             int scenicScore = 0;
             bool shorterTree = true;
@@ -153,20 +154,22 @@ namespace day08
 
         private int countL(int x, int y)
         {
+            if (y == 0) return 0;
+
             int currentHight = forest[x, y];
             int scenicScore = 0;
             bool shorterTree = true;
             int i = y -1;
             do
             {
-                if (forest[x, i] > currentHight)
+                if (forest[x, i] >= currentHight)
                 {
                     shorterTree = false;
                 }
 
                 scenicScore++;
                 i--;
-            } while (shorterTree && i > 0);
+            } while (shorterTree && i >= 0);
 
 
             return scenicScore;
@@ -174,6 +177,7 @@ namespace day08
 
         private int countD(int x, int y)
         {
+            if (x == this.height-1) return 0;
             int currentHight = forest[x, y];
             int scenicScore = 0;
             bool shorterTree = true;
@@ -195,6 +199,8 @@ namespace day08
 
         private int countT(int x, int y)
         {
+            if(x == 0) return 0;
+
             int currentHight = forest[x, y];
             int scenicScore = 0;
             bool shorterTree = true;
@@ -208,7 +214,7 @@ namespace day08
 
                 scenicScore++;
                 i--;
-            } while (shorterTree && i > 0);
+            } while (shorterTree && i >= 0);
 
 
             return scenicScore;

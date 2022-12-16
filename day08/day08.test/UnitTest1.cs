@@ -11,8 +11,14 @@ public class UnitTest1
     }
 
     [Theory]
+    [InlineData(1, 1, 1)]
     [InlineData(4, 1, 2)]
+    [InlineData(1, 1, 3)]
+    [InlineData(6, 2, 1)]
+    [InlineData(2, 2, 3)]
     [InlineData(8, 3, 2)]
+    [InlineData(3, 3, 3)]
+
     public void TestScenicScore(int expectedResult, int x, int y)
     {
         var forest = new Forest("data/test.txt");

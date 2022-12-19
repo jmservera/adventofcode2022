@@ -109,7 +109,7 @@ namespace day09.test
         [MemberData(nameof(MyMovementsUp))]
         public void TestMovingUp(RopeMovements rm, Position expectedPositionH, Position expectedPositionT)
         {
-            rm.MoveH(Movs.Up);         
+            rm.MoveH('U');         
             Assert.Equal(expectedPositionH, rm.H);
             Assert.Equal(expectedPositionT, rm.T);
 
@@ -161,7 +161,7 @@ namespace day09.test
         [MemberData(nameof(MyMovementsRight))]
         public void TestMovingRight(RopeMovements rm, Position expectedPositionH, Position expectedPositionT)
         {
-            rm.MoveH(Movs.Right);
+            rm.MoveH('R');
             Assert.Equal(expectedPositionH, rm.H);
             Assert.Equal(expectedPositionT, rm.T);
 
@@ -191,7 +191,7 @@ namespace day09.test
         [MemberData(nameof(MyMovementsDown))]
         public void TestMovingBottom(RopeMovements rm, Position expectedPositionH, Position expectedPositionT)
         {
-            rm.MoveH(Movs.Down);
+            rm.MoveH('D');
             Assert.Equal(expectedPositionH, rm.H);
             Assert.Equal(expectedPositionT, rm.T);
 
@@ -221,7 +221,7 @@ namespace day09.test
         [MemberData(nameof(MyMovementsLeft))]
         public void TestMovingLeft(RopeMovements rm, Position expectedPositionH, Position expectedPositionT)
         {
-            rm.MoveH(Movs.Left);
+            rm.MoveH('L');
             Assert.Equal(expectedPositionH, rm.H);
             Assert.Equal(expectedPositionT, rm.T);
 
@@ -232,6 +232,22 @@ namespace day09.test
         {
             RopeMovements rm = new RopeMovements(new Position(10, 0), new Position(10, 0));
             rm.ReadAndParseMovementFile("data/test.txt");
+        }
+
+        [Fact]
+        public void TestShortRope()
+        {
+            RopeMovements rm = new RopeMovements(new Position(10, 0), new Position(10, 0), 2);
+            rm.ReadAndParseMovementFile("data/test.txt");
+            Assert.Equal(13, rm.RunMovements());
+        }
+
+        
+        [Fact]
+        public void TestLongRope(){
+            RopeMovements rm = new RopeMovements(new Position(10, 0), new Position(10, 0), 10);
+            rm.ReadAndParseMovementFile("data/test.txt");
+            Assert.Equal(36, rm.RunMovements());
         }
 
     }

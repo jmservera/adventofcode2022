@@ -9,17 +9,21 @@ namespace day09
 {
     public class RopeMovements
     {
-        public Position H = new Position(0, 0);
-        public Position T = new Position(0, 0);
+        public List<Position> rope=new List<Position>();
+        public Position H { get { return rope[0]; } }
+        public Position T { get { return rope[rope.Count - 1]; } }
+        
         private List<(int, char)> movements = new();
         private List<Position> positionsVisitedByTheTail = new List<Position>();
 
-
-        public RopeMovements(Position h, Position t)
+        public RopeMovements(Position h, Position t, int len=2)
         {
-            H = h;
-            T = t;
-            positionsVisitedByTheTail.Add(new Position(T.X, T.Y));
+            rope.Add(h);
+            for (int i = 0; i < len-1; i++)
+            {
+                rope.Add(t);
+            }
+            positionsVisitedByTheTail.Add(new Position(t.X, t.Y));
         }
 
         public void ReadAndParseMovementFile(string path)
@@ -34,18 +38,19 @@ namespace day09
 
         }
 
-        public int RunMovements()
+        public int RunMovements(bool debug=false)
         { 
             foreach (var movement in movements) 
             {
-                var direction = GetDirection(movement.Item2);
                 for(int i = 0; i < movement.Item1; i++)
                 {
-                    MoveH(direction);
+                    MoveH(movement.Item2);
 
                     AddPositionVisited();
-
-                    PrintMatrix();
+                    if (debug)
+                    {
+                        PrintMatrix();
+                    }
                 }
             }
 
@@ -53,25 +58,25 @@ namespace day09
         
         }
 
-        public void MoveH(Movs movement)
+        public void MoveH(char movement)
         {
             int previousHx=H.X;
             int previousHy=H.Y;
 
             switch (movement)
             {
-                case Movs.Up:
+                case 'U':
                     H.X--;
                     break;
 
-                case Movs.Down:
+                case 'D':
                     H.X++;
                     break;
 
-                case Movs.Left:
+                case 'L':
                     H.Y--;
                     break;
-                case Movs.Right:
+                case 'R':
                     H.Y++;
                     break;
             }
@@ -87,13 +92,6 @@ namespace day09
         {
             T.X = x;
             T.Y = y;
-        }
-        public Movs GetDirection(char dir)
-        {
-            if (dir == 'U') return Movs.Up;
-            if (dir == 'D') return Movs.Down;
-            if (dir == 'R') return Movs.Right;
-            else return Movs.Left;
         }
 
         public void PrintMatrix()
@@ -112,7 +110,7 @@ namespace day09
                     {
                         row += 'T';
                     }
-                    else if (positionsVisitedByTheTail.Exists(x => x.X.Equals(i) && x.Y.Equals(j)))
+                    else if (positionsVisitedByTheTail.Contains(new Position(i,j)))
                     {
                         row += '#';
                     }
@@ -131,30 +129,12 @@ namespace day09
 
         private void AddPositionVisited()
         {
-            var pos = positionsVisitedByTheTail.Where(x => x.X.Equals(T.X) && x.Y.Equals(T.Y)).FirstOrDefault();
-            if (pos == null)
+            
+            //var pos = positionsVisitedByTheTail.Where(x => x.X.Equals(T.X) && x.Y.Equals(T.Y)).FirstOrDefault();
+            if (!positionsVisitedByTheTail.Contains(new Position(T.X, T.Y)))
             {
                 positionsVisitedByTheTail.Add(new Position(T.X, T.Y));
             }
         }
-
-
     }
-
-
-    public enum Movs
-    {
-        Up, 
-        Down, 
-        Right, 
-        Left
-    }
-
-
-
-
-
-
-
-
 }

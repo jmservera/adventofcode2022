@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace day09
 {
-    public class Position
+    public record Position
     {
         public int X;
         public int Y;

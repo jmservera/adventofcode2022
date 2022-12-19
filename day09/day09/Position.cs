@@ -23,11 +23,14 @@ namespace day09
 
         public bool Touching(int x, int y)
         {
-            var distance = Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - this.Y, 2));
-            if (distance < 2) return true;
+            if (Distance(x, y) < 2) return true;
             else return false;
         }
-    
+
+        public double Distance(int x, int y){
+            return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - this.Y, 2));
+        }
+
         public bool Diagonal(Position x)
         {
             return Diagonal(x.X, x.Y);
@@ -35,9 +38,19 @@ namespace day09
 
         public bool Diagonal (int x, int y) 
         {
-            var distance = Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - this.Y, 2));
+            var distance = Distance(x,y);
             if (distance < 2 && distance > 1) return true;
             else return false;
+        }
+
+        public void Approach(Position position)
+        {
+            int x = position.X - X;
+            int y = position.Y - Y;
+            if(x!=0)
+                X += x/Math.Abs(x);
+            if(y!=0)
+                Y += y/Math.Abs(y);
         }
     }
 

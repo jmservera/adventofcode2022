@@ -21,7 +21,7 @@ namespace day09
             rope.Add(h);
             for (int i = 0; i < len-1; i++)
             {
-                rope.Add(t);
+                rope.Add(new Position(t.X, t.Y));
             }
             positionsVisitedByTheTail.Add(new Position(t.X, t.Y));
         }
@@ -60,19 +60,14 @@ namespace day09
 
         public void MoveH(char movement)
         {
-            int previousHx=H.X;
-            int previousHy=H.Y;
-
             switch (movement)
             {
                 case 'U':
                     H.X--;
                     break;
-
                 case 'D':
                     H.X++;
                     break;
-
                 case 'L':
                     H.Y--;
                     break;
@@ -81,17 +76,14 @@ namespace day09
                     break;
             }
 
-            if (!H.Touching(T))
+            for (int i = 1; i < rope.Count; i++)
             {
-                MoveT(previousHx, previousHy);
+                if (!rope[i - 1].Touching(rope[i]))
+                {
+                    rope[i].Approach(rope[i - 1]);
+                }
             }
 
-        }
-
-        public void MoveT(int x, int y)
-        {
-            T.X = x;
-            T.Y = y;
         }
 
         public void PrintMatrix()
@@ -102,21 +94,29 @@ namespace day09
 
                 for (int j = 0; j < 40; j++)
                 {
-                    if (i == H.X && j == H.Y)
+                    bool found = false;
+                    for (int pos= 0;pos < rope.Count;pos++)
                     {
-                        row += 'H';
+                        if (rope[pos].X == i && rope[pos].Y == j)
+                        {
+                            if (pos == 0)
+                                row += "H";
+                            else
+                                row += (char)('0' + pos);                            
+                            found = true;
+                            break;
+                        }                        
                     }
-                    else if (i == T.X && j == T.Y)
+                    if (!found)
                     {
-                        row += 'T';
-                    }
-                    else if (positionsVisitedByTheTail.Contains(new Position(i,j)))
-                    {
-                        row += '#';
-                    }
-                    else
-                    {
-                        row += '.';
+                        if (positionsVisitedByTheTail.Contains(new Position(i, j)))
+                        {
+                            row += '#';
+                        }
+                        else
+                        {
+                            row += '.';
+                        }
                     }
                 }
                 Console.WriteLine(row);

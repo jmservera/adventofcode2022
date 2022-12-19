@@ -29,7 +29,7 @@ namespace day09.test
         [InlineData(0, 0, 0, 1, true)]
         [InlineData(0, 0, 0, 2, false)]
         [InlineData(0, 0, 1, 1, true)]
-
+        [InlineData(0, 0, 2, 0, false)]
         public void TestTouching2(int a1, int a2, int b1, int b2, bool expectedResult)
         {
             Position a = new Position(a1, a2);
@@ -246,7 +246,7 @@ namespace day09.test
         [Fact]
         public void TestLongRope(){
             RopeMovements rm = new RopeMovements(new Position(10, 0), new Position(10, 0), 10);
-            rm.ReadAndParseMovementFile("data/test.txt");
+            rm.ReadAndParseMovementFile("data/testlong.txt");
             Assert.Equal(36, rm.RunMovements());
         }
 

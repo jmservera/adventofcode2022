@@ -51,5 +51,13 @@ namespace day10.tests
             Assert.Equal(13140, f.GetSignalStrength());
 
         }
+        [Fact]
+        public void TestImageCRT() 
+        {
+            var f = new Operations("./data/test.txt");
+            f.RunOperations();
+            f.GetImageCRT();
+
+        }
     }
 }

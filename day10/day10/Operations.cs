@@ -76,6 +76,33 @@ namespace day10
                     valueInCycles[220 - 1] * 220);
 
         }
+
+        public void GetImageCRT() 
+        {
+            string result = String.Empty;
+            for (int i = 0; i< valueInCycles.Count; i++) 
+            {
+                int position = i;
+                int cycle = i + 1;
+                if (cycle == 1) 
+                {
+                    if (valueInCycles[1] == position || valueInCycles[1] == position + 1)
+                        result += "#";
+                    else
+                        result += ".";
+
+                }
+                else if (valueInCycles[cycle-1] == position || valueInCycles[cycle] == position+1)
+                {
+                    result += "#";
+                }
+                else
+                {
+                    result += ".";
+                }
+            }
+        }
+    
     }
     
 }

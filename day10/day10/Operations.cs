@@ -46,24 +46,46 @@ namespace day10
             int numCycle = 0;
             int regX = 1;
 
-            foreach (var command in Commands)
+            int commandIndex = 0;
+            bool operationLoop = false;
+            
+            do
             {
-                int oldReg = regX;
 
-                if (command.Item1 == "noop")
+                var position = (numCycle) % 40;
+                if (position == 0)
                 {
-                    numCycle++;
-                    valueInCycles.Add(numCycle, regX);
+                    Console.WriteLine();
+                }
+                if (regX - 1 <= position && position <= regX + 1)
+                {
+                    Console.Write("#");
                 }
                 else
                 {
-                    valueInCycles.Add(numCycle+1, regX);
-                    regX += command.Item2;
-                    numCycle += 2;
-                    valueInCycles.Add(numCycle, regX);
+                    Console.Write(".");
                 }
-            }
 
+                numCycle++;
+
+
+                if (Commands[commandIndex].Item1 == "noop")
+                {
+                    commandIndex++;
+                }
+                else
+                {
+                    if (operationLoop)
+                    {
+                        regX += Commands[commandIndex].Item2;
+                        commandIndex++;
+                    }
+                    operationLoop = !operationLoop;
+                }
+                valueInCycles.Add(numCycle, regX);
+
+            } while (commandIndex < Commands.Count);
+            Console.WriteLine();
         }
 
         public long GetSignalStrength()
@@ -101,6 +123,7 @@ namespace day10
                     result += ".";
                 }
             }
+            Console.WriteLine(result);
         }
     
     }

@@ -8,9 +8,10 @@ namespace day11
 {
     public class Monkey
     {
-        readonly Queue<int> items = new();
         
-        public Queue<int> Items { get => items; }
+        readonly Queue<IntXLib.IntX> items = new();
+        
+        public Queue<IntXLib.IntX> Items { get => items; }
 
         public Tuple<string,string,string>? Operation { get; set; }
 
@@ -19,8 +20,8 @@ namespace day11
         public int IfTrue { get; private set; }
         public int IfFalse { get; private set; }
 
-        int counter;
-        public int Counter { get=>counter; }
+        IntXLib.IntX counter=0;
+        public IntXLib.IntX Counter { get=>counter; }
         public int WorryDivider { get; set; } = 3;
 
         private List<Monkey> pack;
@@ -37,7 +38,7 @@ namespace day11
                 var worryLevel = items.Dequeue();
                 worryLevel = Operate(worryLevel);
                 if (WorryDivider > 1)
-                    worryLevel /= WorryDivider;
+                    worryLevel = worryLevel / WorryDivider;
                 if (worryLevel % TestValue == 0)
                 {
                     pack[IfTrue].Items.Enqueue(worryLevel);
@@ -49,7 +50,7 @@ namespace day11
             }
         }
 
-        public int Operate(int worryLevel)
+        public IntXLib.IntX Operate(IntXLib.IntX worryLevel)
         {
             if (Operation != null)
             {

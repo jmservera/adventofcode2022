@@ -8,9 +8,9 @@ namespace day11
 {
     public class Monkey
     {
-        readonly List<int> startingItems = new();
-
-        public List<int> StartingItems { get => startingItems; }
+        readonly Queue<int> items = new();
+        
+        public Queue<int> Items { get => items; }
 
         public Tuple<string,string,string>? Operation { get; set; }
 
@@ -19,19 +19,53 @@ namespace day11
         public int IfTrue { get; private set; }
         public int IfFalse { get; private set; }
 
+        int counter;
+        public int Counter { get=>counter; }
+        public int WorryDivider { get; set; } = 3;
 
-        public Monkey()
+        private List<Monkey> pack;
+
+        public Monkey(List<Monkey> pack)
         {
-            
+            this.pack = pack;
         }
 
-        public int Operate()
+        public void RunTurn()
         {
-            return 0;
+            while(items.Count>0)
+            {
+                var worryLevel = items.Dequeue();
+                worryLevel = Operate(worryLevel);
+                if (WorryDivider > 1)
+                    worryLevel /= WorryDivider;
+                if (worryLevel % TestValue == 0)
+                {
+                    pack[IfTrue].Items.Enqueue(worryLevel);
+                }
+                else {
+                    pack[IfFalse].Items.Enqueue(worryLevel);
+                }
+                counter++;
+            }
         }
 
-        public int Test()
+        public int Operate(int worryLevel)
         {
+            if (Operation != null)
+            {
+                var nr = worryLevel;
+                if (Operation.Item3 != "old")
+                {
+                    nr = int.Parse(Operation.Item3);
+                }
+                switch (Operation.Item2)
+                {
+                    case "+":
+                        return worryLevel + nr;
+                    case "*":
+                        return worryLevel * nr;
+                }
+            }
             return 0;
         }
 
@@ -52,7 +86,7 @@ namespace day11
             {
                 if (input[inputIndex].StartsWith("Monkey"))
                 {
-                    var monkey = new Monkey();
+                    var monkey = new Monkey(monkeys);
                     monkeys.Add(monkey);
                 }
                 else
@@ -62,7 +96,10 @@ namespace day11
                     {
                         string[] items = input[inputIndex].Split(':');
                         string[] itemValues = items[1].Split(',');
-                        monkey.StartingItems.AddRange(itemValues.Select(item=> int.Parse(item)));
+                        foreach (var item in itemValues)
+                        {
+                            monkey.items.Enqueue(int.Parse(item));
+                        }
                     }
                     else if (input[inputIndex].StartsWith("  Operation"))
                     {

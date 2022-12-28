@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +10,9 @@ namespace day11
     public class Monkey
     {
         
-        readonly Queue<IntXLib.IntX> items = new();
+        readonly Queue<long> items = new();
         
-        public Queue<IntXLib.IntX> Items { get => items; }
+        public Queue<long> Items { get => items; }
 
         public Tuple<string,string,string>? Operation { get; set; }
 
@@ -20,9 +21,10 @@ namespace day11
         public int IfTrue { get; private set; }
         public int IfFalse { get; private set; }
 
-        IntXLib.IntX counter=0;
-        public IntXLib.IntX Counter { get=>counter; }
+        long counter=0;
+        public long Counter { get=>counter; }
         public int WorryDivider { get; set; } = 3;
+        public int MCM { get; private set; }
 
         private List<Monkey> pack;
 
@@ -32,14 +34,20 @@ namespace day11
         }
 
         public void RunTurn()
-        {
-            while(items.Count>0)
+        {          
+            while (items.Count>0)
             {
                 var worryLevel = items.Dequeue();
                 worryLevel = Operate(worryLevel);
                 if (WorryDivider > 1)
+                {
                     worryLevel = worryLevel / WorryDivider;
-                if (worryLevel % TestValue == 0)
+                }
+                else
+                {
+                    worryLevel = worryLevel % MCM;
+                }
+                if (worryLevel%TestValue==0)
                 {
                     pack[IfTrue].Items.Enqueue(worryLevel);
                 }
@@ -50,7 +58,9 @@ namespace day11
             }
         }
 
-        public IntXLib.IntX Operate(IntXLib.IntX worryLevel)
+        private int divall = 1;
+        
+        public long Operate(long worryLevel)
         {
             if (Operation != null)
             {
@@ -128,6 +138,9 @@ namespace day11
                 inputIndex++;
             } while (inputIndex < input.Length);
 
+            var mcm = monkeys.Select(m => m.TestValue).Aggregate((a, b) => a * b);
+            monkeys.ForEach(m => m.MCM = mcm);
+            
             return monkeys;
         }
     }

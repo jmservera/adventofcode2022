@@ -60,8 +60,7 @@ namespace day11.test
         [Theory]
         [InlineData(20,99,97,8,103)]
         [InlineData(1000,5204,4792,199,5192)]
-        [InlineData(5000, 26075, 23921, 974, 26000)]
-        
+        [InlineData(5000, 26075, 23921, 974, 26000)]        
         public void TestRunCycleWorried(int cycles, int a, int b, int c, int d)
         {
             MonkeyRunner.RunCycles(monkeys, cycles, true);
@@ -69,7 +68,6 @@ namespace day11.test
             Assert.Equal(b, monkeys[1].Counter);
             Assert.Equal(c, monkeys[2].Counter);
             Assert.Equal(d, monkeys[3].Counter);
-
         }
     }
 }

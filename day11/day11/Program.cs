@@ -2,9 +2,7 @@
 
 List<string> files = new List<string>()
 {
-    "./data/test.txt",
-    "./data/isa.txt",
-    "./data/jm.txt"
+    "./data/isa.txt"
 };
 
 foreach (var file in files)

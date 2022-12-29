@@ -34,9 +34,25 @@ namespace Day12
             MovementMatrix = new char[w, h];
             iniciateMovementMatrix();
 
-    }
+        }
+
+        public int LookForTheMinPathStartingFromE()
+        {
+            int numSteps = 0;
+            var currentPosition = CoordinatesOf('E');
+            positions.Push(currentPosition);
+            positionValues.Push(GetValue(currentPosition));
+            List<int> steps = new List<int>();
+
+            foreach (var m in moves)
+            {
+                steps.Add(ExploreNextMovementR(currentPosition, m, numSteps));
+            }
 
 
+            return steps.Min();
+
+        }
 
         public int LookForThePathMinSteps()
         {
@@ -53,6 +69,98 @@ namespace Day12
             }
 
             return steps.Min();
+        }
+
+        private int ExploreNextMovementR(Position current, char move, int numSteps)
+        {
+            var nextPosition = GetNewPosition(current, move);
+
+            // check if the movement is possible:
+            // position is not less than 0 (Out of range)
+            if (nextPosition.X >= 0 && nextPosition.Y >= 0 && nextPosition.X < w && nextPosition.Y < h)
+            {
+                var currentValue = GetValue(current);
+                var nextValue = GetValue(nextPosition);
+
+                // the value of the next cell - value of current cell <= 1
+                if (currentValue - nextValue  <= 1)
+                {
+
+                    if (InputMatrix[nextPosition.X][nextPosition.Y] == 'S')
+                    {
+                        numSteps++;
+                        AddMovement(move, current);
+                        positions.Push(nextPosition);
+                        positionValues.Push(nextValue);
+
+
+                        // finish! print whatever!!!
+                        if (numSteps < minNumSteps)
+                        {
+                            minNumSteps = numSteps;
+                            PrintPossibleSolution(current, numSteps);
+                        }
+                    }
+                    else if (!positions.Contains(nextPosition))
+                    {
+
+                        // not visited yet
+
+                        // we can jump! 
+
+                        numSteps++;
+                        if (numSteps > minNumSteps)                        {
+                            // forget this path, is very long
+                            return int.MaxValue;
+                        }
+                        else
+                        {
+                            AddMovement(move, current);
+                            positions.Push(nextPosition);
+                            positionValues.Push(nextValue);
+                            foreach (var m in moves)
+                            {
+                                ExploreNextMovementR(nextPosition, m, numSteps);
+                            }
+                            DeleteMovement(current);
+                            positions.Pop();
+                            positionValues.Pop();
+
+                        }
+                    }
+
+                }
+
+            }
+            return minNumSteps;
+
+
+        }
+
+        private void PrintPossibleSolution(Position current, int numSteps)
+        {
+            Console.WriteLine($"Num Steps: {numSteps}");
+            Console.WriteLine("Positions");
+            foreach (Position p in positions.Reverse())
+            {
+                Console.Write("(" + p.X + " " + p.Y + ") ->");
+            }
+
+            Console.Write("\n");
+            Console.WriteLine("Values");
+            foreach (var v in positionValues.Reverse())
+            {
+                Console.Write($"{v} ->");
+            }
+
+            printMatrix();
+            Console.WriteLine($"visitedCells: {visitedCells()}");
+
+            DeleteMovement(current);
+            positions.Pop();
+            positionValues.Pop();
+
+            Console.WriteLine("*******************************************");
         }
 
         private int ExploreNextMovement(Position current, char move, int numSteps)
@@ -82,30 +190,7 @@ namespace Day12
                         if (numSteps < minNumSteps)
                         {
                             minNumSteps = numSteps;
-
-
-                            Console.WriteLine($"Num Steps: {numSteps}");
-                            Console.WriteLine("Positions");
-                            foreach (Position p in positions.Reverse())
-                            {
-                                Console.Write("(" + p.X + " " + p.Y + ") ->");
-                            }
-
-                            Console.Write("\n");
-                            Console.WriteLine("Values");
-                            foreach (var v in positionValues.Reverse())
-                            {
-                                Console.Write($"{v} ->");
-                            }
-
-                            printMatrix();
-                            Console.WriteLine($"visitedCells: {visitedCells()}");
-
-                            DeleteMovement(current);
-                            positions.Pop();
-                            positionValues.Pop();
-
-                            Console.WriteLine("*******************************************");
+                            PrintPossibleSolution(current, numSteps);
                         }
                     }
                     else if (!positions.Contains(nextPosition))

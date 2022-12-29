@@ -20,6 +20,8 @@ namespace Day12
         private Stack<Position> positions = new Stack<Position>();
         private Stack<char> positionValues = new Stack<char>();
 
+        private Stack<(Position, int)> positionAndNumSteps= new Stack<(Position, int)>();
+
         private char[,] MovementMatrix; 
 
 
@@ -32,8 +34,84 @@ namespace Day12
             h = InputMatrix[0].GetLength(0); // height
 
             MovementMatrix = new char[w, h];
-            iniciateMovementMatrix();
+            inicialPopulateMovementMatrix();
 
+        }
+
+
+
+        public int LookForTheMinPathIterative()
+        {
+            int numSteps = 0;
+
+            var currentPosition = CoordinatesOf('E');
+            positions.Push(currentPosition);
+            List<int> steps = new List<int>();
+
+            do
+            {
+                bool validPath = false;
+                foreach (var m in moves)
+                {
+                    Position nextPosition = GetNewPosition(currentPosition, m);
+                    if (validMovement(currentPosition, m))
+                    {
+                        if (InputMatrix[nextPosition.X][nextPosition.Y] == 'S')
+                        {
+                            //check if is "S".
+                            var last = positionAndNumSteps.Pop();                            
+                            steps.Add(last.Item2++);
+                        }
+                        else
+                        {
+                            if (!positions.Contains(nextPosition)) 
+                            {
+                                addNewPositionInStack(nextPosition, numSteps + 1);
+                                positions.Push(nextPosition);
+                                validPath= true;
+                            }
+                        }         
+                    }
+                }
+
+                if (!validPath)
+                {
+                    // no sé dónde hacer pop 
+                    positions.Pop();
+                }
+
+                var p = positionAndNumSteps.Pop();
+                currentPosition = p.Item1;
+                numSteps = p.Item2;
+
+
+            }
+            while (currentPosition != null);
+
+
+
+
+            return steps.Min();
+
+        }
+
+        private void addNewPositionInStack(Position nextPosition, int numSteps)
+        {
+            positionAndNumSteps.Push((nextPosition, numSteps));
+        }
+
+        private bool validMovement(Position current, char move)
+        {
+            Position nextPosition = GetNewPosition(current, move);
+            if (nextPosition.X >= 0 && nextPosition.Y >= 0 && nextPosition.X < w && nextPosition.Y < h)
+            {
+                var currentValue = GetValue(current);
+                var nextValue = GetValue(nextPosition);
+                return (currentValue - nextValue <= 1);
+            }
+
+            return false;
+               
         }
 
         public int LookForTheMinPathStartingFromE()
@@ -352,7 +430,7 @@ namespace Day12
             return new Position(-1, -1);
         }
 
-        private void iniciateMovementMatrix()
+        private void inicialPopulateMovementMatrix()
         {
             for (int x = 0; x < w; ++x)
             {

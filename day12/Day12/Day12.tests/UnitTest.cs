@@ -7,7 +7,7 @@ namespace Day12.tests
         {
             string path = "./data/test.txt";
             var mov = new Movement(path);
-            mov.LookForThePath();
+            Assert.Equal(31, mov.LookForThePathMinSteps());
 
         }
     }

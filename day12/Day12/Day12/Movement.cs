@@ -81,9 +81,17 @@ namespace Day12
                 {
                     foreach (var np in validMovements)
                     {                       
-                        positionAndNumSteps.Push((np, numSteps + 1));
-                        positions.Push(np);
-                        validPath = true;                        
+                        
+                        if (steps.Count > 0 && numSteps + 1 > steps.Min())
+                        {
+                            validPath = false; // so much movements, forget this branch
+                        }
+                        else
+                        {
+                            positionAndNumSteps.Push((np, numSteps + 1));
+                            positions.Push(np);
+                            validPath = true;
+                        }
                     }                        
                 }
                 

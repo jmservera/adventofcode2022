@@ -42,62 +42,98 @@ namespace Day12
 
         public int LookForTheMinPathIterative()
         {
-            int numSteps = 0;
-
-            var currentPosition = CoordinatesOf('E');
-            positions.Push(currentPosition);
+            // Inizializate
+ 
+            positions.Push(CoordinatesOf('E'));
+            positionAndNumSteps.Push((CoordinatesOf('E'), 0));
             List<int> steps = new List<int>();
 
             do
             {
+ 
+                var p = positionAndNumSteps.Pop();
+                var currentPosition = p.Item1;
+                var numSteps = p.Item2;
+
                 bool validPath = false;
+
+                List<Position> validMovements = new List<Position>();
+                //check all "next valid movement" - save them in "validMovements" list
                 foreach (var m in moves)
                 {
                     Position nextPosition = GetNewPosition(currentPosition, m);
                     if (validMovement(currentPosition, m))
                     {
-                        if (InputMatrix[nextPosition.X][nextPosition.Y] == 'S')
-                        {
-                            //check if is "S".
-                            var last = positionAndNumSteps.Pop();                            
-                            steps.Add(last.Item2++);
-                        }
-                        else
-                        {
-                            if (!positions.Contains(nextPosition)) 
-                            {
-                                addNewPositionInStack(nextPosition, numSteps + 1);
-                                positions.Push(nextPosition);
-                                validPath= true;
-                            }
-                        }         
+                        validMovements.Add(nextPosition);
                     }
                 }
 
+
+                //any of the list is S?
+                Position? nextMovementArrivesToS = AnyNextPositionArrivesToS(validMovements);
+                if (nextMovementArrivesToS != null)
+                {
+                    var last = currentPosition;
+                    steps.Add(numSteps + 1);
+                }
+                //if not
+                else
+                {
+                    foreach (var np in validMovements)
+                    {                       
+                        positionAndNumSteps.Push((np, numSteps + 1));
+                        positions.Push(np);
+                        validPath = true;                        
+                    }                        
+                }
+                
+                //validPath is false when we don't find any next movement or we find S.
                 if (!validPath)
                 {
-                    // no sé dónde hacer pop 
-                    positions.Pop();
+                    CleanPositionStack(numSteps);
                 }
-
-                var p = positionAndNumSteps.Pop();
-                currentPosition = p.Item1;
-                numSteps = p.Item2;
-
-
             }
-            while (currentPosition != null);
-
-
-
+            while (positionAndNumSteps.Count > 0);
 
             return steps.Min();
-
         }
 
-        private void addNewPositionInStack(Position nextPosition, int numSteps)
+        private Position? AnyNextPositionArrivesToS(List<Position> validMovements)
         {
-            positionAndNumSteps.Push((nextPosition, numSteps));
+            foreach (var p in validMovements)
+            {
+                if (InputMatrix[p.X][p.Y] == 'S')
+                {
+                    return p;
+                }
+            }
+
+            return null;
+        }
+
+        private void CleanPositionStack(int numSteps)
+        {
+            if (positionAndNumSteps.Count > 0)
+            {
+                //peek positionAndNumSteps
+                var positionBefore = positionAndNumSteps.Peek().Item1;
+                bool cleanStack = false;
+                // numSteps - positionAndNumSteps.numSteps = num positions to remove
+                do
+                {
+                    if (positions.Peek() != positionBefore)
+                    {
+                        positions.Pop();
+                    }
+                    else
+                    {
+                        cleanStack = true;
+                    }
+                }
+                while (!cleanStack);
+            }
+
+                
         }
 
         private bool validMovement(Position current, char move)
@@ -107,7 +143,7 @@ namespace Day12
             {
                 var currentValue = GetValue(current);
                 var nextValue = GetValue(nextPosition);
-                return (currentValue - nextValue <= 1);
+                return (currentValue - nextValue <= 1 && !positions.Contains(nextPosition));
             }
 
             return false;
